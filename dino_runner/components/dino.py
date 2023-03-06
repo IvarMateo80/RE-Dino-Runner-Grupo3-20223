@@ -26,15 +26,15 @@ class Dino(Sprite):
         elif self.dino_duck:
             self.duck()
 
-        if user_input[pygame.K_UP] and not self.dino_jump:
+        if user_input[pygame.K_UP] and not self.dino_jump and not self.dino_duck:
             self.dino_run = False
             self.dino_duck = False
             self.dino_jump = True
-        elif user_input[pygame.K_DOWN] and not self.dino_duck:
+        elif user_input[pygame.K_DOWN] and not self.dino_duck and not self.dino_jump:
             self.dino_run = False
             self.dino_duck = True
             self.dino_jump = False
-        elif not self.dino_jump and not self.dino_duck:
+        elif not self.dino_jump:
             self.dino_run = True
             self.dino_duck = False
             self.dino_jump = False
