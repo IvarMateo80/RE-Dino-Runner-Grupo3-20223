@@ -1,9 +1,10 @@
 import random
 import pygame
-from dino_runner.components import game
 from dino_runner.components.obstacles.bird import Bird
 from dino_runner.components.obstacles.cactus import Cactus
-from dino_runner.utils.constants import BIRD, LARGE_CACTUS, SMALL_CACTUS
+from dino_runner.components.obstacles.power_ups.power_up import PowerUp
+from dino_runner.components.obstacles.power_ups.power_up_manager import PowerUpManager
+from dino_runner.utils.constants import BIRD, DEFAULT_TYPE, DINO, LARGE_CACTUS, SCREEN_WIDTH, SHIELD_TYPE, SMALL_CACTUS
 
 class ObstacleManager:
     def __init__(self):
@@ -23,10 +24,15 @@ class ObstacleManager:
         for obstacle in self.obstacles:
             obstacle.update(game.game_speed, self.obstacles)
             if game.player.dino_rect.colliderect(obstacle.rect):
-                pygame.time.delay(1000)
-                game.playing = False
-                self.obstacles = []
-                break
+                if not game.player.shield:
+                    game.death_counter += 1
+                    pygame.time.delay(1000)
+                    game.playing = False
+                    self.obstacles = []
+                    game.x_pos_cloud = SCREEN_WIDTH
+                    break
+                else:
+                    self.obstacles.remove(obstacle)
 
     def draw(self, screen):
         for obstacle in self.obstacles:
