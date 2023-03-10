@@ -13,7 +13,6 @@ class Dino(Sprite):
         self.jump_img = {DEFAULT_TYPE: JUMPING, SHIELD_TYPE: JUMPING_SHIELD}
         self.type = DEFAULT_TYPE
         self.image = self.run_img[self.type][0]
-        self.shield_type = False
 
         self.dino_rect = self.image.get_rect()
         self.dino_rect.x = self.X_POS
@@ -27,9 +26,9 @@ class Dino(Sprite):
 
     def setup_state_booleans(self):
         self.has_powers = False
-        self.shield = False
+        self.shield = False 
         self.show_text = False
-        self.shield_time_up = False     
+        self.shield_time_up = 0    
 
     def update(self, user_input):
         if self.dino_run:
@@ -97,19 +96,19 @@ class Dino(Sprite):
     def check_invincibility (self, screen):
         print(self.shield)
         if self.shield:
-            time_to_show = round ((self.shield_time_up - pygame.time.get_ticks())/ 1000 , 2)
+            time_to_show = round ((self.shield_time_up - pygame.time.get_ticks())/ 1000, 2)
             if time_to_show >=0:
                 if self.show_text:
-                    font = pygame.font.Font('dreesansbold.ttf', 18)
+                    font = pygame.font.Font('freesansbold.ttf', 18)
                     text = font.render(f'shield enabled for {time_to_show}', True, (0, 0, 0))
                     textRect = text.get_rect()
                     textRect.center = (500, 40)
                     screen.blit(text, textRect)
-            else:
-                self.shield = False
-                self.update_to_default(SHIELD_TYPE)
+        else:
+            self.shield = False
+            self.update_to_default(SHIELD_TYPE)
 
     def update_to_default (self, current_type):
         if self.type == current_type:
-            self.type = SHIELD_TYPE
+            self.type = DEFAULT_TYPE
             

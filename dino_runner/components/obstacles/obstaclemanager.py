@@ -27,9 +27,7 @@ class ObstacleManager:
                 if not game.player.shield:
                     game.death_counter += 1
                     pygame.time.delay(1000)
-                    game.playing = False
-                    self.obstacles = []
-                    game.x_pos_cloud = SCREEN_WIDTH
+                    game.playing = False    
                     break
                 else:
                     self.obstacles.remove(obstacle)
@@ -38,8 +36,8 @@ class ObstacleManager:
         for obstacle in self.obstacles:
             obstacle.draw(screen)
     
-    #def reset_obstacle(self):
-        #self.obstacles = []
+    def reset_obstacle(self):
+        self.obstacles = []
 
     
         

@@ -31,9 +31,9 @@ class Game:
     def run(self):
         # Game loop: events - update - draw
         self.create_components()
+        self.x_pos_cloud = SCREEN_WIDTH
         self.playing = True
         self.game_speed = 20
-        self.x_pos_cloud = SCREEN_WIDTH
         self.points = 0
         while self.playing:
             self.events()
@@ -52,6 +52,7 @@ class Game:
         self.power_up_manager.update(self.points, self.game_speed, self.player, self)
 
     def draw(self):
+        self.score()
         self.clock.tick(FPS)
         self.screen.fill((255, 255, 255))
         self.draw_background()
@@ -132,7 +133,8 @@ class Game:
             self.game_speed +=1
         text, text_rect = text_utils.get_score_element(self.points)
         self.screen.blit(text, text_rect)
-        self.player.check_invincibility
+        self.player.check_invincibility(self.screen)
 
     def create_components (self):
+        self.obstacle_manager.reset_obstacle()
         self.power_up_manager.reset_power_ups(self.points)
